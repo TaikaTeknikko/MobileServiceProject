@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col col-10>
+        <img src="..\assets\Picture.svg" style="max-width: 100px;">
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-card-header>
+      <ion-card-title>{{title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>Born: {{birthYear}}</ion-card-content>
+    <ion-card-content>Power level: {{power}}</ion-card-content>
+  </ion-card>
+</ion-content>
