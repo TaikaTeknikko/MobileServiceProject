@@ -4,6 +4,7 @@ export class Card {
     birthYear: number;
     power: number;
 
+
     constructor(
         newId: number, 
         newTitle: string, 
