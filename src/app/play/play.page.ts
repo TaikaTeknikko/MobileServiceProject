@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardsService } from '../cards.service';
 import { ToastController } from '@ionic/angular';
+import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
 
 @Component({
   selector: 'app-play',
@@ -79,10 +80,8 @@ export class PlayPage implements OnInit {
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
 
-
-
     this.presentToast();
-
+    //disables players access to card
     this.disableItem = true;
       
   }
@@ -152,6 +151,7 @@ export class PlayPage implements OnInit {
 
   async presentToast(){
     const toast = await this.toastController.create({
+      position: 'top',
       message: this.message,
       buttons: [
         {
@@ -162,7 +162,7 @@ export class PlayPage implements OnInit {
             this.disableItem = false;
             this.enemy_birthYear = 0;
             this.enemy_power = 0;
-            this.enemy_title = '';
+            this.enemy_title = '???';
           }
         }
       ]
