@@ -12,6 +12,8 @@ export class DetailsPage implements OnInit {
   title: string;
   birthYear: number;
   power: number;
+  speed: number;
+  wealth: number;
 
   constructor(public activatedRoute: ActivatedRoute, public cardsService: CardsService) {
 
@@ -25,6 +27,8 @@ export class DetailsPage implements OnInit {
     this.title = display.title;
     this.birthYear = display.birthYear;
     this.power = display.power;
+    this.speed = display.speed;
+    this.wealth = display.wealth;
     
   }
 

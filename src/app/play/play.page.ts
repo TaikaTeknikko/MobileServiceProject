@@ -15,12 +15,16 @@ export class PlayPage implements OnInit {
     title: string;
     birthYear: number;
     power: number;
+    speed: number;
+    wealth: number;
     random: number;
 
     enemy_id: number;
     enemy_title: string;
     enemy_birthYear: number;
     enemy_power: number;
+    enemy_speed: number;
+    enemy_wealth: number;
     enemy_random: number;
 
     wins: number;
@@ -39,29 +43,13 @@ export class PlayPage implements OnInit {
     this.draws = 0;
     this.losses = 0;
     this.score = 0;
-
+    this.resetEnemyCard();
     this.drawRandom();
   }
 
-  playBirth(){ //gets triggered when birth value is triggered
-    console.log("clicktest Birth");
-    this.random = 0;
-    this.random = Math.floor((Math.random() * 16) + 1);
-    //make sure that enemy and player card are not the same
-    while(this.id == this.random){
-      this.random = Math.floor((Math.random() * 16) + 1);
-    }
-    console.log("enemy id:" + this.random);
+  playBirth(){ 
 
-    //give ID to the enemy card. 
-    const enemy_id: number = this.random;
-    let display: any = this.cardsService.getElement(enemy_id);
-
-    //give values to the attributes of the enemy element
-    this.enemy_id = display.id;
-    this.enemy_title = display.title;
-    this.enemy_birthYear = display.birthYear;
-    this.enemy_power = display.power;
+    this.generateEnemyCard();
 
     //This is a win/draw/lose counter
     if(this.birthYear < this.enemy_birthYear){
@@ -87,24 +75,8 @@ export class PlayPage implements OnInit {
   }
 
   playPower(){
-    console.log("clicktest Power");
-    this.random = 0;
-    this.random = Math.floor((Math.random() * 16) + 1);
-    //make sure that enemy and player card are not the same
-    while(this.id == this.random){
-      this.random = Math.floor((Math.random() * 16) + 1);
-    }
-    console.log("enemy id:" + this.random);
-
-    //give ID to the enemy card. 
-    const enemy_id: number = this.random;
-    let display: any = this.cardsService.getElement(enemy_id);
-
-    //give values to the attributes of the enemy element
-    this.enemy_id = display.id;
-    this.enemy_title = display.title;
-    this.enemy_birthYear = display.birthYear;
-    this.enemy_power = display.power;
+    
+    this.generateEnemyCard();
 
     //This is a win/draw/lose counter
     if(this.power > this.enemy_power){
@@ -122,18 +94,61 @@ export class PlayPage implements OnInit {
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
-
     this.presentToast();
-
     this.disableItem = true;
-
-      
   }
+
+  playSpeed(){
+    
+    this.generateEnemyCard();
+
+    //This is a win/draw/lose counter
+    if(this.speed > this.enemy_speed){
+      console.log("Win");
+      this.wins = this.wins + 1;
+      this.message = "You win!";
+    } else if (this.speed == this.enemy_speed){
+      console.log("Draw");
+      this.draws = this.draws + 1;
+      this.message = "It's a draw!";
+    } else {
+      console.log("Lose");
+      this.losses = this.losses + 1;
+      this.message = "You lose!";
+    }
+    //calculates the actual score
+    this.score = this.wins*100 - this.losses*100;
+    this.presentToast();
+    this.disableItem = true;
+  }
+
+  playWealth(){
+    
+    this.generateEnemyCard();
+
+    //This is a win/draw/lose counter
+    if(this.wealth > this.enemy_wealth){
+      console.log("Win");
+      this.wins = this.wins + 1;
+      this.message = "You win!";
+    } else if (this.wealth == this.enemy_wealth){
+      console.log("Draw");
+      this.draws = this.draws + 1;
+      this.message = "It's a draw!";
+    } else {
+      console.log("Lose");
+      this.losses = this.losses + 1;
+      this.message = "You lose!";
+    }
+    //calculates the actual score
+    this.score = this.wins*100 - this.losses*100;
+    this.presentToast();
+    this.disableItem = true;
+  }
+
   drawRandom(){
-    console.log("draw a new card");
     //random number is generated to draw a random card in the app
     this.random = Math.floor((Math.random() * 16) + 1);
-    console.log(this.random);
 
     //now the id gets the random picked number from above
     const id: number = this.random;
@@ -144,6 +159,8 @@ export class PlayPage implements OnInit {
     this.title = display.title;
     this.birthYear = display.birthYear;
     this.power = display.power;
+    this.speed = display.speed;
+    this.wealth = display.wealth;
     return id;
 
 
@@ -160,14 +177,45 @@ export class PlayPage implements OnInit {
           handler: () => {
             this.drawRandom();
             this.disableItem = false;
-            this.enemy_birthYear = 0;
-            this.enemy_power = 0;
-            this.enemy_title = '???';
+            this.resetEnemyCard();
+            
           }
         }
       ]
     });
     toast.present();
+  }
+
+  generateEnemyCard() {
+
+    this.random = 0;
+    this.random = Math.floor((Math.random() * 16) + 1);
+
+    //makes sure that enemy and player card are not the same
+    while(this.id == this.random){
+      this.random = Math.floor((Math.random() * 16) + 1);
+    }
+
+    //give ID to the enemy card. 
+    const enemy_id: number = this.random;
+    let display: any = this.cardsService.getElement(enemy_id);
+
+    //give values to the attributes of the enemy element
+    this.enemy_id = display.id;
+    this.enemy_title = display.title;
+    this.enemy_birthYear = display.birthYear;
+    this.enemy_power = display.power;
+    this.enemy_speed = display.speed;
+    this.enemy_wealth = display.wealth;
+  }
+
+  resetEnemyCard() {
+    this.enemy_title = '???';
+    this.enemy_birthYear = 0;
+    this.enemy_power = 0;
+    this.enemy_speed = 0;
+    this.enemy_wealth = 0;
+    
   }
 
 }

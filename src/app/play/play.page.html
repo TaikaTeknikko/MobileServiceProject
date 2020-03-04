@@ -33,6 +33,8 @@
             <ion-label>
               <ion-item class="press" (click)="playBirth()" [disabled]="disableItem">Year of Birth: {{birthYear}}</ion-item>
               <ion-item class="press" (click)="playPower()" [disabled]="disableItem"> Power: {{power}}</ion-item>
+              <ion-item class="press" (click)="playSpeed()" [disabled]="disableItem"> Speed: {{speed}}</ion-item>
+              <ion-item class="press" (click)="playWealth()" [disabled]="disableItem"> Wealth: {{wealth}} €</ion-item>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -53,7 +55,9 @@
           <ion-item>
             <ion-label>
               <ion-item>Year of Birth: {{enemy_birthYear}}</ion-item>
-              <ion-item> Power: {{enemy_power}}</ion-item>
+              <ion-item>Power: {{enemy_power}}</ion-item>
+              <ion-item>Speed: {{enemy_speed}}</ion-item>
+              <ion-item>Wealth: {{enemy_wealth}} €</ion-item>
             </ion-label>
           </ion-item>
         </ion-list>
