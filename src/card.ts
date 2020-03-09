@@ -5,6 +5,7 @@ export class Card {
     power: number;
     speed: number;
     wealth: number;
+    pictureName: string;
 
 
     constructor(
@@ -13,7 +14,8 @@ export class Card {
         newBirthYear: number, 
         newPower: number,
         newSpeed: number,
-        newWealth: number
+        newWealth: number,
+        newPictureName: string
     )
     {
         this.id = newId;
@@ -22,5 +24,6 @@ export class Card {
         this.power = newPower;
         this.speed = newSpeed;
         this.wealth = newWealth;
+        this.pictureName = newPictureName;
     }
 }

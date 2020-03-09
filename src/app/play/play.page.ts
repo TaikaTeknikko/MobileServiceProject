@@ -17,6 +17,7 @@ export class PlayPage implements OnInit {
     power: number;
     speed: number;
     wealth: number;
+    pictureName: string;
     random: number;
 
     enemy_id: number;
@@ -25,6 +26,8 @@ export class PlayPage implements OnInit {
     enemy_power: number;
     enemy_speed: number;
     enemy_wealth: number;
+    enemy_unknownPicture: string;
+    enemy_pictureName: string;
     enemy_random: number;
 
     wins: number;
@@ -45,6 +48,10 @@ export class PlayPage implements OnInit {
     this.score = 0;
     this.resetEnemyCard();
     this.drawRandom();
+  }
+
+  resetScoreboard(){
+    
   }
 
   playBirth(){ 
@@ -161,6 +168,7 @@ export class PlayPage implements OnInit {
     this.power = display.power;
     this.speed = display.speed;
     this.wealth = display.wealth;
+    this.pictureName = display.pictureName;
     return id;
 
 
@@ -207,14 +215,16 @@ export class PlayPage implements OnInit {
     this.enemy_power = display.power;
     this.enemy_speed = display.speed;
     this.enemy_wealth = display.wealth;
+    this.enemy_pictureName = display.pictureName;
   }
 
   resetEnemyCard() {
-    this.enemy_title = '???';
+    this.enemy_title = 'Unknown Enemy';
     this.enemy_birthYear = 0;
     this.enemy_power = 0;
     this.enemy_speed = 0;
     this.enemy_wealth = 0;
+    this.enemy_pictureName = "Unknown.jpg";
     
   }
 

@@ -14,6 +14,7 @@ export class DetailsPage implements OnInit {
   power: number;
   speed: number;
   wealth: number;
+  pictureName: string;
 
   constructor(public activatedRoute: ActivatedRoute, public cardsService: CardsService) {
 
@@ -29,6 +30,7 @@ export class DetailsPage implements OnInit {
     this.power = display.power;
     this.speed = display.speed;
     this.wealth = display.wealth;
+    this.pictureName = display.pictureName;
     
   }
 

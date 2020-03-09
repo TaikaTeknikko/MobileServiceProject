@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'play',
     loadChildren: () => import('./play/play.module').then( m => m.PlayPageModule)
   },
+  {
+    path: 'help',
+    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
+  },
 ];
 
 @NgModule({
