@@ -10,12 +10,22 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-title>Your Score: {{score}}</ion-title>
-    <ion-item>Wins: {{wins}}</ion-item>
-    <ion-item>Draws: {{draws}} </ion-item>
-    <ion-item>Losses: {{losses}} </ion-item>
+    <ion-button (click)="resetScoreboard()">Reset Score!</ion-button>
+    <ion-title>Your Score: {{saveScore[3]}}</ion-title>
+    <ion-item>Wins: {{saveScore[0]}}</ion-item>
+    <ion-item>Draws: {{saveScore[1]}} </ion-item>
+    <ion-item>Losses: {{saveScore[2]}} </ion-item>
   </ion-list>
 
+  
+   <!--  <ion-list>
+      <ion-button (click)="resetScoreboard()">Reset Score!</ion-button>
+      <ion-title>Your Score: {{score}}</ion-title>
+      <ion-item>Wins: {{wins}}</ion-item>
+      <ion-item>Draws: {{draws}} </ion-item>
+      <ion-item>Losses: {{losses}} </ion-item>
+    </ion-list>
+-->
 
 <!-- PLAYER CARD  -->
   <ion-row>

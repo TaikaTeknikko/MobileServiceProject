@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CardsService } from '../cards.service';
 import { ToastController } from '@ionic/angular';
 import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-play',
@@ -34,23 +35,40 @@ export class PlayPage implements OnInit {
     draws: number;
     losses: number;
     score: number;
+    saveScore: Array<number>;
 
     message: string;
 
     disableItem = false;
 
-  constructor(public router: Router, public cardsService: CardsService, public toastController: ToastController) { }
+  constructor(public router: Router, 
+    public cardsService: CardsService, 
+    public toastController: ToastController,
+    public storage: Storage) { }
 
   ngOnInit() {
     this.wins = 0;
     this.draws = 0;
-    this.losses = 0;
-    this.score = 0;
+    this.losses= 0;
+    this.score= 0;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    console.log(this.saveScore);
+    console.log("start");
+
+    this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
+    
     this.resetEnemyCard();
     this.drawRandom();
+    console.log("this is the storage" +this.storage);
   }
 
+  //also reset the Storage!!!!!!!!
   resetScoreboard(){
+    this.wins = 0;
+    this.draws = 0;
+    this.losses= 0;
+    this.score= 0;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
     
   }
 
@@ -74,6 +92,9 @@ export class PlayPage implements OnInit {
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
+
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    //this.storage.set('saveScore', JSON.stringify(this.saveScore));
 
     this.presentToast();
     //disables players access to card
@@ -101,6 +122,7 @@ export class PlayPage implements OnInit {
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
     this.presentToast();
     this.disableItem = true;
   }
@@ -125,6 +147,7 @@ export class PlayPage implements OnInit {
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
     this.presentToast();
     this.disableItem = true;
   }
@@ -149,6 +172,7 @@ export class PlayPage implements OnInit {
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
     this.presentToast();
     this.disableItem = true;
   }
