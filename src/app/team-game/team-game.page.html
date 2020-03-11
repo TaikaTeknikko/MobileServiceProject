@@ -9,9 +9,8 @@
 
 
 <ion-content class="ion-padding">
+  <ion-button (click)="shuffeling()">shuffle deck</ion-button>
   <ion-list>
-    <ion-button (click)="resetScoreboard()">Reset Score!</ion-button>
-    <ion-button (click)="showDeckCount()">Show Deck Count</ion-button>
     <ion-title>Your Score: {{saveScore[3]}}</ion-title>
     <ion-item>Wins: {{saveScore[0]}}</ion-item>
     <ion-item>Draws: {{saveScore[1]}} </ion-item>

@@ -238,7 +238,7 @@ export class TeamGamePage implements OnInit {
 
     
     this.random = Math.floor((Math.random() * 16) + 1);
-    if(this.deck1 != 0 || this.deck2 != 0){
+    if(this.deck1 != 0 && this.deck2 != 0){
       while(this.cardsService.getElement(this.random).team == 2){
         this.random = Math.floor((Math.random() * 16) + 1);
     }
@@ -293,7 +293,7 @@ export class TeamGamePage implements OnInit {
     
 
     //makes sure that enemy and player card are not the same
-    if(this.deck1 != 0 || this.deck2 != 0){
+    if(this.deck1 != 0 && this.deck2 != 0){
       while(this.id == this.random || this.cardsService.getElement(this.random).team == 1){
       
         this.random = Math.floor((Math.random() * 16) + 1);
@@ -338,6 +338,8 @@ export class TeamGamePage implements OnInit {
               side: 'end',
               text: 'Go to Main Page',
               handler: () => {
+                this.disableItem = false;
+                this.shuffeling();
                 this.router.navigateByUrl('/home');
                 
               }
@@ -354,6 +356,8 @@ export class TeamGamePage implements OnInit {
               side: 'end',
               text: 'Go to Main Page',
               handler: () => {
+                this.disableItem = false;
+                this.shuffeling();
                 this.router.navigateByUrl('/home');
                 
               }
@@ -365,6 +369,15 @@ export class TeamGamePage implements OnInit {
 
     }
   
-  
+  shuffeling(){
+    for(let i = 1; i <= 16; i++){
+      if(i%2 == 0){
+        this.cardsService.getElement(i).team = 2;
+      }else{
+        this.cardsService.getElement(i).team = 1;
+      }
+    }
+    this.showDeckCount();
+  }
 
 }
