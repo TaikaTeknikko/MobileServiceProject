@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Beat the Computer!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-button (click)="resetScoreboard()">Reset Score!</ion-button>
+    <ion-button (click)="showDeckCount()">Show Deck Count</ion-button>
+    <ion-title>Your Score: {{saveScore[3]}}</ion-title>
+    <ion-item>Wins: {{saveScore[0]}}</ion-item>
+    <ion-item>Draws: {{saveScore[1]}} </ion-item>
+    <ion-item>Losses: {{saveScore[2]}} </ion-item>
+    <ion-item>Deck Count: {{deck1}}</ion-item>
+    <ion-item>Enemy Deck Count: {{deck2}}</ion-item>
+  </ion-list>
+
+  
+   <!--  <ion-list>
+      <ion-button (click)="resetScoreboard()">Reset Score!</ion-button>
+      <ion-title>Your Score: {{score}}</ion-title>
+      <ion-item>Wins: {{wins}}</ion-item>
+      <ion-item>Draws: {{draws}} </ion-item>
+      <ion-item>Losses: {{losses}} </ion-item>
+    </ion-list>
+-->
+
+<!-- PLAYER CARD  -->
+  <ion-row>
+    <ion-col>
+      <div class="player ion-padding">
+        <ion-row>
+          <h3>Your card</h3>
+        </ion-row>
+        <img src="..\assets\{{pictureName}}" style="max-width: 100px; max-height: 100px;">
+        <ion-card-header>
+          <ion-card-title>{{title}}</ion-card-title>
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-item class="press" (click)="playBirth()" [disabled]="disableItem">Year of Birth: {{birthYear}}</ion-item>
+              <ion-item class="press" (click)="playPower()" [disabled]="disableItem"> Power: {{power}}</ion-item>
+              <ion-item class="press" (click)="playSpeed()" [disabled]="disableItem"> Speed: {{speed}}</ion-item>
+              <ion-item class="press" (click)="playWealth()" [disabled]="disableItem"> Wealth: {{wealth}} €</ion-item>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-col>
+
+<!-- ENEMY CARD -->  
+    <ion-col>
+      <div class="enemy ion-padding">
+        <ion-row>
+          <h3>Enemy card</h3>
+        </ion-row>
+        <img src="..\assets\{{enemy_pictureName}}" style="max-width: 100px; max-height: 100px;">
+        <ion-card-header>
+          <ion-card-title>{{enemy_title}}</ion-card-title>
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-item>Year of Birth: {{enemy_birthYear}}</ion-item>
+              <ion-item>Power: {{enemy_power}}</ion-item>
+              <ion-item>Speed: {{enemy_speed}}</ion-item>
+              <ion-item>Wealth: {{enemy_wealth}} €</ion-item>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

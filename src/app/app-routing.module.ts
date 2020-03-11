@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'help',
     loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
   },
+  {
+    path: 'team-game',
+    loadChildren: () => import('./team-game/team-game.module').then( m => m.TeamGamePageModule)
+  },
 ];
 
 @NgModule({

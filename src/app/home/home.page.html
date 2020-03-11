@@ -12,7 +12,9 @@
     <div class="ion-padding">
       <ion-button routerLink="/play">Play</ion-button>
       <ion-button routerLink="/help">How to Play the Game?</ion-button>
+      <ion-button routerLink="/team-game">Team Game</ion-button>
     </div>
+    <p>Here you can see all the different cards. By clicking on them you can inspect their attributes.</p>
     <ion-list-header>Cards</ion-list-header>
     <ion-item *ngFor="let item of cards" routerLink="/details/{{item.id}}">
       <ion-avatar slot="start">

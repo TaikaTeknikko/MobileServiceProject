@@ -6,11 +6,11 @@ import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/
 import { Storage } from '@ionic/storage';
  
 @Component({
-  selector: 'app-play',
-  templateUrl: './play.page.html',
-  styleUrls: ['./play.page.scss'],
+  selector: 'app-team-game',
+  templateUrl: './team-game.page.html',
+  styleUrls: ['./team-game.page.scss'],
 })
-export class PlayPage implements OnInit {
+export class TeamGamePage implements OnInit {
 
     id: number;
     title: string;
@@ -20,6 +20,7 @@ export class PlayPage implements OnInit {
     wealth: number;
     pictureName: string;
     random: number;
+    team: number;
 
     enemy_id: number;
     enemy_title: string;
@@ -30,6 +31,7 @@ export class PlayPage implements OnInit {
     enemy_unknownPicture: string;
     enemy_pictureName: string;
     enemy_random: number;
+    enemy_team: number;
 
     wins: number;
     draws: number;
@@ -38,6 +40,9 @@ export class PlayPage implements OnInit {
     saveScore: Array<number>;
 
     message: string;
+
+    deck1: number;
+    deck2: number;
 
     disableItem = false;
 
@@ -56,11 +61,13 @@ export class PlayPage implements OnInit {
     console.log("start");
 
     this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
-    console.log(this.storage.get('saveScore'));
+    //console.log(this.storage.get('saveScore'));
 
     this.resetEnemyCard();
     this.drawRandom();
-    console.log("this is the storage" +this.storage);
+    //console.log("this is the storage" +this.storage);
+
+    this.showDeckCount();
   }
 
   //also reset the Storage!!!!!!!!
@@ -73,15 +80,33 @@ export class PlayPage implements OnInit {
     
   }
 
+
+  showDeckCount(){
+    this.deck1 = 0;
+    this.deck2 = 0;
+    for(let i=1; i<=16;i++){
+      if(this.cardsService.getElement(i).team === 1){
+        this.deck1 = this.deck1 + 1;
+        
+      }else {
+        this.deck2 = this.deck2 +1;
+        
+      }
+    }
+  }
+
   playBirth(){ 
 
     this.generateEnemyCard();
+    
 
     //This is a win/draw/lose counter
     if(this.birthYear < this.enemy_birthYear){
       console.log("Win");
       this.message = "You win!";
       this.wins = this.wins + 1;
+      this.cardsService.getElement(this.enemy_random).team = 1;
+      console.log(this.cardsService.getElement(this.enemy_random).team + " is the new team");
     } else if (this.birthYear == this.enemy_birthYear){
       console.log("Draw");
       this.message = "It's a draw!";
@@ -90,16 +115,22 @@ export class PlayPage implements OnInit {
       console.log("Lose");
       this.message = "You Lose!";
       this.losses = this.losses + 1;
+      this.cardsService.getElement(this.id).team = 2;
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
 
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
     //this.storage.set('saveScore', JSON.stringify(this.saveScore));
-
+    this.showDeckCount();
+    this.checkEndOfGame();
+    if(this.deck1 != 0 && this.deck2 != 0){
     this.presentToast();
+    }
     //disables players access to card
     this.disableItem = true;
+
+    
       
   }
 
@@ -112,6 +143,7 @@ export class PlayPage implements OnInit {
       console.log("Win");
       this.wins = this.wins + 1;
       this.message = "You win!";
+      this.cardsService.getElement(this.enemy_random).team = 1;
     } else if (this.power == this.enemy_power){
       console.log("Draw");
       this.draws = this.draws + 1;
@@ -120,12 +152,20 @@ export class PlayPage implements OnInit {
       console.log("Lose");
       this.losses = this.losses + 1;
       this.message = "You lose!";
+      this.cardsService.getElement(this.id).team = 2;
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.showDeckCount();
+    this.checkEndOfGame();
+    if(this.deck1 != 0 && this.deck2 != 0){
     this.presentToast();
+    }
     this.disableItem = true;
+
+
+    
   }
 
   playSpeed(){
@@ -137,6 +177,7 @@ export class PlayPage implements OnInit {
       console.log("Win");
       this.wins = this.wins + 1;
       this.message = "You win!";
+      this.cardsService.getElement(this.enemy_random).team = 1;
     } else if (this.speed == this.enemy_speed){
       console.log("Draw");
       this.draws = this.draws + 1;
@@ -145,12 +186,19 @@ export class PlayPage implements OnInit {
       console.log("Lose");
       this.losses = this.losses + 1;
       this.message = "You lose!";
+      this.cardsService.getElement(this.id).team = 2;
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.showDeckCount();
+    this.checkEndOfGame();
+    if(this.deck1 != 0 && this.deck2 != 0){
     this.presentToast();
+    }
     this.disableItem = true;
+
+    
   }
 
   playWealth(){
@@ -162,6 +210,7 @@ export class PlayPage implements OnInit {
       console.log("Win");
       this.wins = this.wins + 1;
       this.message = "You win!";
+      this.cardsService.getElement(this.enemy_random).team = 1;
     } else if (this.wealth == this.enemy_wealth){
       console.log("Draw");
       this.draws = this.draws + 1;
@@ -170,22 +219,39 @@ export class PlayPage implements OnInit {
       console.log("Lose");
       this.losses = this.losses + 1;
       this.message = "You lose!";
+      this.cardsService.getElement(this.id).team = 2;
     }
     //calculates the actual score
     this.score = this.wins*100 - this.losses*100;
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.showDeckCount();
+    this.checkEndOfGame();
+    if(this.deck1 != 0 && this.deck2 != 0){
     this.presentToast();
+    }
     this.disableItem = true;
+
   }
 
   drawRandom(){
     //random number is generated to draw a random card in the app
-    this.random = Math.floor((Math.random() * 16) + 1);
 
+    
+    this.random = Math.floor((Math.random() * 16) + 1);
+    if(this.deck1 != 0 || this.deck2 != 0){
+      while(this.cardsService.getElement(this.random).team == 2){
+        this.random = Math.floor((Math.random() * 16) + 1);
+    }
+  }
+    
     //now the id gets the random picked number from above
     const id: number = this.random;
+
+    console.log("This is the Team of the current card: " + this.cardsService.getElement(id).team);
     let display: any = this.cardsService.getElement(id);
 
+    
+    
     //give values to the attributes of the displayed element
     this.id = display.id;
     this.title = display.title;
@@ -194,6 +260,7 @@ export class PlayPage implements OnInit {
     this.speed = display.speed;
     this.wealth = display.wealth;
     this.pictureName = display.pictureName;
+    this.team = display.team;
     return id;
 
 
@@ -223,11 +290,18 @@ export class PlayPage implements OnInit {
 
     this.random = 0;
     this.random = Math.floor((Math.random() * 16) + 1);
+    
 
     //makes sure that enemy and player card are not the same
-    while(this.id == this.random){
-      this.random = Math.floor((Math.random() * 16) + 1);
+    if(this.deck1 != 0 || this.deck2 != 0){
+      while(this.id == this.random || this.cardsService.getElement(this.random).team == 1){
+      
+        this.random = Math.floor((Math.random() * 16) + 1);
+      } 
     }
+
+    this.enemy_random = this.random;
+    console.log("this is the enemy team: " + this.cardsService.getElement(this.random).team);
 
     //give ID to the enemy card. 
     const enemy_id: number = this.random;
@@ -252,5 +326,45 @@ export class PlayPage implements OnInit {
     this.enemy_pictureName = "Unknown.jpg";
     
   }
+
+  async checkEndOfGame(){
+    if(this.deck1 == 0){
+      
+        const toast = await this.toastController.create({
+          position: 'middle',
+          message: "you are a loser!",
+          buttons: [
+            {
+              side: 'end',
+              text: 'Go to Main Page',
+              handler: () => {
+                this.router.navigateByUrl('/home');
+                
+              }
+            }
+          ]
+        });
+        toast.present();
+      }else if(this.deck2 == 0){
+        const toast = await this.toastController.create({
+          position: 'middle',
+          message: "You won! Good Job!",
+          buttons: [
+            {
+              side: 'end',
+              text: 'Go to Main Page',
+              handler: () => {
+                this.router.navigateByUrl('/home');
+                
+              }
+            }
+          ]
+        });
+        toast.present();
+     }
+
+    }
+  
+  
 
 }
