@@ -4,12 +4,9 @@ import { CardsService } from '../cards.service';
 import { ToastController } from '@ionic/angular';
 import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
 import { Storage } from '@ionic/storage';
-<<<<<<< HEAD
- 
-=======
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
->>>>>>> cabbdcff332f142f6a25613bc5b26ad1000921e0
+
 @Component({
   selector: 'app-play',
   templateUrl: './play.page.html',
@@ -75,12 +72,11 @@ export class PlayPage implements OnInit {
     });
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
 
-<<<<<<< HEAD
+
     this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
     console.log(this.storage.get('saveScore'));
 
-=======
->>>>>>> cabbdcff332f142f6a25613bc5b26ad1000921e0
+
     this.resetEnemyCard();
     this.drawRandom();
   }
