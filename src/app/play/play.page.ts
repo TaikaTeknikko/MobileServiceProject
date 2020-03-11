@@ -4,7 +4,12 @@ import { CardsService } from '../cards.service';
 import { ToastController } from '@ionic/angular';
 import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
 import { Storage } from '@ionic/storage';
+<<<<<<< HEAD
  
+=======
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+>>>>>>> cabbdcff332f142f6a25613bc5b26ad1000921e0
 @Component({
   selector: 'app-play',
   templateUrl: './play.page.html',
@@ -35,6 +40,7 @@ export class PlayPage implements OnInit {
     draws: number;
     losses: number;
     score: number;
+
     saveScore: Array<number>;
 
     message: string;
@@ -47,29 +53,46 @@ export class PlayPage implements OnInit {
     public storage: Storage) { }
 
   ngOnInit() {
-    this.wins = 0;
-    this.draws = 0;
-    this.losses= 0;
-    this.score= 0;
-    this.saveScore = [this.wins, this.draws, this.losses, this.score];
-    console.log(this.saveScore);
-    console.log("start");
+    
+    this.storage.get('saveScore').then((val) => {
+      this.saveScore = val;
+      if (!this.saveScore) {
+        console.log("storage is empty");
+        this.wins = 0;
+        this.draws = 0;
+        this.losses= 0;
+        this.score= 0;
+        this.saveScore = [this.wins, this.draws, this.losses, this.score];
+        this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
 
+      }else {
+        console.log("storage isnt empty");
+        this.wins = this.saveScore[0];
+        this.losses = this.saveScore[1];
+        this.draws = this.saveScore[2];
+        this.score = this.saveScore[3];
+      }
+    });
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+
+<<<<<<< HEAD
     this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
     console.log(this.storage.get('saveScore'));
 
+=======
+>>>>>>> cabbdcff332f142f6a25613bc5b26ad1000921e0
     this.resetEnemyCard();
     this.drawRandom();
-    console.log("this is the storage" +this.storage);
   }
 
-  //also reset the Storage!!!!!!!!
   resetScoreboard(){
     this.wins = 0;
     this.draws = 0;
     this.losses= 0;
     this.score= 0;
     this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
+    this.storage.clear();
     
   }
 
@@ -91,12 +114,7 @@ export class PlayPage implements OnInit {
       this.message = "You Lose!";
       this.losses = this.losses + 1;
     }
-    //calculates the actual score
-    this.score = this.wins*100 - this.losses*100;
-
-    this.saveScore = [this.wins, this.draws, this.losses, this.score];
-    //this.storage.set('saveScore', JSON.stringify(this.saveScore));
-
+    this.updateScore();
     this.presentToast();
     //disables players access to card
     this.disableItem = true;
@@ -121,9 +139,7 @@ export class PlayPage implements OnInit {
       this.losses = this.losses + 1;
       this.message = "You lose!";
     }
-    //calculates the actual score
-    this.score = this.wins*100 - this.losses*100;
-    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.updateScore();
     this.presentToast();
     this.disableItem = true;
   }
@@ -146,9 +162,7 @@ export class PlayPage implements OnInit {
       this.losses = this.losses + 1;
       this.message = "You lose!";
     }
-    //calculates the actual score
-    this.score = this.wins*100 - this.losses*100;
-    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.updateScore();
     this.presentToast();
     this.disableItem = true;
   }
@@ -171,9 +185,7 @@ export class PlayPage implements OnInit {
       this.losses = this.losses + 1;
       this.message = "You lose!";
     }
-    //calculates the actual score
-    this.score = this.wins*100 - this.losses*100;
-    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.updateScore();
     this.presentToast();
     this.disableItem = true;
   }
@@ -251,6 +263,12 @@ export class PlayPage implements OnInit {
     this.enemy_wealth = 0;
     this.enemy_pictureName = "Unknown.jpg";
     
+  }
+
+  updateScore() {
+    this.score = this.wins*100 - this.losses*100;
+    this.saveScore = [this.wins, this.draws, this.losses, this.score];
+    this.storage.set('saveScore', [this.wins, this.draws, this.losses, this.score]);
   }
 
 }
